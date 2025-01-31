@@ -28,8 +28,12 @@ def start() -> list[threading.Thread]:
 
     sock.setblocking(False)  # Non-blocking mode
 
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    try:
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    except OSError:
+        pass
+    finally:
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
     sock.bind((opts.device, PORT))
 
