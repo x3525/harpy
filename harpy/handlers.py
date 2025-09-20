@@ -1,6 +1,7 @@
 """Various handlers."""
 
 import atexit
+import contextlib
 import os
 import sys
 import termios
@@ -42,7 +43,9 @@ class Is:
     @staticmethod
     def fore() -> bool:
         """Test if the program is running in the foreground."""
-        return os.getpgrp() == os.tcgetpgrp(1)
+        with contextlib.suppress(OSError):
+            return os.getpgrp() == os.tcgetpgrp(sys.stdout.fileno())
+        return False
 
     @staticmethod
     def root() -> bool:
