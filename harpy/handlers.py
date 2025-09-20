@@ -39,7 +39,7 @@ class Is:
     def atty() -> bool:
         """Test if all file descriptors are connected to a terminal."""
         return all(
-            sys.stdin.isatty(), sys.stdout.isatty(), sys.stderr.isatty()
+            (sys.stdin.isatty(), sys.stdout.isatty(), sys.stderr.isatty())
         )
 
     @staticmethod
