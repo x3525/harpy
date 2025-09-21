@@ -38,17 +38,17 @@ class Is:
 
     @staticmethod
     def atty(*objs: typing.TextIO) -> bool:
-        """Test if the given file descriptors are connected to a terminal."""
+        """Check whether all the given `objs` are connected to a terminal."""
         return all(obj.isatty() for obj in objs)
 
     @staticmethod
     def fore() -> bool:
-        """Test if the program is running in the foreground."""
+        """Check whether the program is running in the foreground."""
         with contextlib.suppress(OSError):
             return os.getpgrp() == os.tcgetpgrp(sys.stdout.fileno())
         return False
 
     @staticmethod
     def root() -> bool:
-        """Test if user is root."""
+        """Check whether the user is root."""
         return os.geteuid() == 0
