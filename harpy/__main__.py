@@ -4,6 +4,7 @@ import atexit
 import os
 import signal
 import socket
+import sys
 import threading
 
 from harpy.cli import Namespace, parser
@@ -83,7 +84,7 @@ def log() -> None:
 
 def main() -> None:
     """Entry point."""
-    if not Is.atty():
+    if not Is.atty(sys.stdin, sys.stdout, sys.stderr):
         return
     if not Is.fore():
         return
