@@ -5,6 +5,7 @@ import contextlib
 import os
 import sys
 import termios
+import typing
 
 
 class Echo:
@@ -36,11 +37,9 @@ class Is:
     """Multiple unrelated "is" questions."""
 
     @staticmethod
-    def atty() -> bool:
-        """Test if all file descriptors are connected to a terminal."""
-        return all(
-            (sys.stdin.isatty(), sys.stdout.isatty(), sys.stderr.isatty())
-        )
+    def atty(*objs: typing.TextIO) -> bool:
+        """Test if the given file descriptors are connected to a terminal."""
+        return all(obj.isatty() for obj in objs)
 
     @staticmethod
     def fore() -> bool:
